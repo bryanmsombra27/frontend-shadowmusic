@@ -8,7 +8,8 @@ const Favorites = () => {
 
 
   const removeFavorites = (id) => {
-    favorites = favorites.flat().filter(f => f.id !== id);
+    // favorites = favorites.flat().filter(f => f.id !== id);
+    favorites = favorites.filter(f => f.id !== id);
     setfavoritos(favorites)
     localStorage.setItem("favorites", JSON.stringify(favorites));
   }
@@ -19,7 +20,8 @@ const Favorites = () => {
         <i className="fa-solid fa-house-user fa-3x"></i>
       </Link>
 
-      {favoritos.flat().map(favorite =>
+      {/* {favoritos.flat().map(favorite => */}
+      {favoritos.map(favorite =>
 
         <div className="card lg:card-side bg-base-100 shadow-xl contenedor gap-9 mt-9 " key={favorite.id}>
           <figure><img src={favorite.album && favorite.album?.images[0].url} alt="Album" className="w-40 h-40" /></figure>

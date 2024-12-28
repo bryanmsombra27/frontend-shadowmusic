@@ -8,10 +8,35 @@ const Track = () => {
     const [track, settrack] = useState({});
 
     const saveFavorites = (track) => {
+        const heartIcon = document.getElementById(track.id);
+
+
+        heartIcon.classList.remove("fa-regular")
+        heartIcon.classList.add("fa-solid")
+
         const favoritos = localStorage.getItem("favorites") ? JSON.parse(localStorage.getItem("favorites")) : [];
-        favoritos.push(track)
+
+        const alreadyFavorite = favoritos.find(song => song.id == track.id);
+
+        if (
+            !alreadyFavorite) {
+            favoritos.push(track)
+
+        }
+
         localStorage.setItem("favorites", JSON.stringify(favoritos));
     }
+
+    const isFavorite = (id) => {
+        const favoritos = localStorage.getItem("favorites") ? JSON.parse(localStorage.getItem("favorites")) : [];
+
+        const isFavorite = !!favoritos.find(fav => fav.id == id)
+
+
+        return isFavorite;
+
+    }
+
 
     useEffect(() => {
         const fetchtracks = async () => {
@@ -22,7 +47,10 @@ const Track = () => {
                     }
                 })
                 const data = await res.json();
+
+                console.log(data, "TRACK")
                 settrack(data);
+
 
 
 
@@ -59,10 +87,10 @@ const Track = () => {
                         <p>Duracion: {(track?.duration_ms / 60000).toFixed(2).replace(".", ":")} min </p>
                         <p>Popularidad Obtenida: {track?.popularity}% </p>
                         <p>Cancion Explicita: {track?.explicit ? "Si" : "No"} </p>
-                        <i className="fa-regular fa-heart fa-2x cursor-pointer mt-3" onClick={() => saveFavorites(track)} ></i>
+                        <i id={track.id} className={`${isFavorite(track.id) ? 'fa-solid' : "fa-regular"} fa-heart fa-2x cursor-pointer mt-3`} onClick={() => saveFavorites(track)} ></i>
 
                         {track.preview_url &&
-                            <div className="card-actions justify-end">
+                            <div className="card-actions justify-end mt-6 md:mt-0">
                                 <audio controls >
                                     <source src={track.preview_url} type="audio/mp3" />
                                 </audio>

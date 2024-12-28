@@ -29,7 +29,7 @@ const Search = ({ tracks, settracks, tracksCopy }) => {
 
     return (
 
-        <input type="text" placeholder="busqueda por cancion o artista" className="input input-bordered input-secondary w-full max-w-xs" onChange={onChange} value={search} />
+        <input type="text" placeholder="busqueda por cancion o artista" className="input input-bordered input-primary w-[230px] lg:w-[250px]  " onChange={onChange} value={search} />
 
     )
 

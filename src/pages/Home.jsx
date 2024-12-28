@@ -33,6 +33,12 @@ const Home = () => {
             setaccessToken(data.accessToken)
             window.history.pushState({}, null, "/");
             localStorage.setItem("token", JSON.stringify(data.accessToken));
+
+            if (data.error) {
+                localStorage.removeItem("token");
+                navigate("/login");
+            }
+
         } catch (error) {
 
             window.location = "/";
@@ -52,19 +58,21 @@ const Home = () => {
 
     return (
         <>
-            <div className="flex mt-9 items-center justify-around gap-12">
-                <h1 className="font-bold text-4xl text-center my-9 uppercase">Canciones</h1>
+            <div className="flex mt-9 gap-12 flex-col lg:flex-row lg:items-center lg:justify-around   "> 
+         
+                <h1 className="font-bold text-4xl text-center lg:my-9 uppercase">Canciones</h1>
 
-                <div className="flex gap-9 flex-grow-2 items-center space-x-9">
+                {/* <div className="flex gap-4 mx-auto flex-grow-2   items-center   md:space-x-6  lg:space-x-9 lg:gap-9"> */}
+                <div className="flex mx-auto lg:mx-0 flex-grow-2 items-center gap-6  lg:space-x-9 lg:gap-9">
                     <Link to="/favorites">
-                        <i className="fa-solid fa-heart fa-2x cursor-pointer mt-3"></i>
+                        <i className="fa-solid fa-heart fa-2x cursor-pointer pl-3  "></i>
                     </Link>
                     <Search tracks={tracks} settracks={settracks} tracksCopy={tracksCopy} className="w-max" />
                     <i className="fa-solid fa-right-from-bracket fa-2x cursor-pointer" onClick={logOut} ></i>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 mx-auto justify-center items-center gap-0 contenedor    md:grid-cols-3 md:gap-14  container p-6">
+            <div className="grid grid-cols-1 mx-auto justify-center items-center gap-0 contenedor    lg:grid-cols-2 xl:grid-cols-3 md:gap-14  container p-6 ">
                 <Tracks token={accessToken} tracks={tracks} settracks={settracks} settracksCopy={settracksCopy} />
 
             </div>
